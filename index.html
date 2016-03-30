@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Debugging Drupal 8</title>
+
+		<meta name="description" content="Debugging Drupal 8">
+		<meta name="author" content="Jesus Manuel Olivas">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style"
+					content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,
+		maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<!-- <link rel="stylesheet" href="lib/css/zenburn.css"> -->
+		<link rel="stylesheet" href="lib/css/tomorrow-night-bright.css">
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container displayed as slide -->
+			<div class="slides">
+				<section>
+					<br/>
+					<h1 class="big">Debugging Drupal 8</h1>
+					<h1 class="big">with Drupal Console</h1>
+					<br/>
+					<div>
+						<div class="half">
+							<img src="assets/images/drupal-console.png" class="no-border">
+						</div>
+						<div class="half">
+							<img src="assets/images/fldc-logo.png" class="no-border">
+						</div>
+					</div>
+					<aside class="notes">
+						
+					</aside>
+				</section>
+
+				<section>
+					<h2>About me</h2>
+					<hr>
+					<div class="half">
+						<img src="assets/images/jmolivas.jpg" >
+						<br/>
+						<div>
+							<h3 class="name">Jesus Manuel Olivas</h3>
+							<h3 class="name">Drupal 8 Solutions Engineer</h3>
+						</div>
+						<div  class="text-small">
+							<p>
+							<a target="_blank"  href="http://twitter.com/jmolivas" target="_blank">@jmolivas</a> | 
+							<a target="_blank"  href="http://twitter.com/drupalconsole" target="_blank">@drupalconsole</a>
+							</p>
+							<a target="_blank"  href="http://twitter.com/drupodcast" target="_blank">@drupodcast</a>
+						</div>
+					</div>
+					<div class="half">
+						<p>
+							<br/><br/><br/>
+							<img src="assets/images/ffw-logo.png"  class="no-border">
+							<br/><br/><br/><br/><br/>
+						</p>
+						<div>
+							<h3 class="name">I work for FFW</h3>
+							<h3 class="name"><i>(and you should too)</i></h3>
+						</div>
+					</div>
+					<aside class="notes">
+						<p>My names is ....</p>
+						<p>I work for FFW (Formely knonw as Blink reaction & Propeople)</p>
+					</aside>
+				</section>
+
+<!-- 				<section data-background="#0076C2">
+					<h1 class="medium white">Topics</h1>
+					<ul class="bullets medium white">
+						<li>Tools</li>
+						<li>Debugging system</li>
+						<li>Debugging site</li>
+						<li>Debugging code</li>
+					</ul>
+				</section>
+
+				<section>
+					<h1 class="big">Tools</h1>
+				</section>
+
+				<section>
+					<ul class="bullets">
+						<li>PHPCheck</li>
+						<li>DrupalConsole</li>
+						<li>Composer</li>
+						<li>Peco</li>
+						<li>Webprofiler, Kint, VarDumper</li>
+						<li>PHPQA</li>
+						<li>XDebug</li>
+					</ul>
+				</section>
+ -->
+				<section data-background="#000000">
+					<h2 class="white">Download Drupal Console</h2>
+<pre><code class="shell text-normal">
+# Run this in your terminal to get the latest project version:
+curl https://drupalconsole.com/installer -L -o drupal.phar
+
+# Accessing from anywhere on your system:
+mv drupal.phar /usr/local/bin/drupal
+
+# Apply executable permissions on the downloaded file:
+chmod +x /usr/local/bin/drupal
+
+# Copy configuration files to user home directory:
+drupal init --override
+
+# Check and validate system requirements
+drupal check
+
+</code></pre>
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">Install peco</h2>
+					<p class="white">Simplistic interactive filtering tool</p>
+<pre><code class="shell text-big">
+
+brew install peco
+
+</code></pre>
+					<p><a class="white" href="https://github.com/peco/peco">https://github.com/peco/peco</a></p>
+				</section>
+
+				<section>
+					<h1 class="big">Debugging system</h1>
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">Copy configuration files</h2>
+					<h4 class="white">drupal init</h4>
+					<img class="no-border" src="assets/images/drupal-init.png" alt="">
+					<aside class="notes">
+						<p>
+							Use the init command to copy the configurations files, overriding values on these files is how you can change DrupalConsole behaviour. 
+						</p>
+					</aside>
+				</section>
+
+
+				<section data-background="#000000">
+					<h2 class="big white">drupal check</h2>
+					<img class="no-border" src="assets/images/drupal-check.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="big white">drupal check (boot)</h2>
+					<img class="no-border" src="assets/images/drupal-check-boot.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="big white">drupal check (boot and fix)</h2>
+					<img class="no-border" src="assets/images/drupal-check-boot-fix.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">~/.console/phpcheck.yml</h2>
+<pre><code class="ruby text-normal">
+requirements:
+  php:
+    required: 5.5.9
+  configurations:
+    required:
+      - date.timezone: 'America/Tijuana'
+      - memory_limit: '1024M'
+    recomended:
+  extensions:
+    required:
+      - date
+      - dom
+      - filter
+      - gd
+      - hash
+      - json
+      - pcre
+		...
+    recommended:
+      - mysql
+      - sqlite3
+</code></pre>
+				</section>
+
+				<section>
+					<h1 class="big">Debugging site</h1>
+					<hr/>
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">Validate composer.json file</h2>
+<pre><code class="shell text-big">
+# Execute this 
+composer validate
+
+# This should be the result
+./composer.json is valid
+</code></pre>
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">composer show --installed</h2>
+					<img class="no-border" src="assets/images/composer-show-installed.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">composer show doctrine/annotations</h2>
+					<img class="no-border" src="assets/images/composer-show.png" alt="">
+				</section>
+
+<!-- 				<section data-background="#000000">
+				<h2 class="white">~/.console/commands.yml</h2>
+
+<pre><code class="ruby text-normal">
+application:
+  disable:
+    modules:
+#      - module_name
+#      - module_name
+  default:
+    global:
+      options:
+         learning: true 
+        # generate-inline: true
+        # generate-chain: true
+        # yes: true
+</code></pre>
+				</section> -->
+
+				<section data-background="#000000">
+					<h2 class="white">drupal site:status [1/2]</h2>
+					<img class="no-border" src="assets/images/drupal-site-status-1.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal site:status [2/2]</h2>
+					<img class="no-border" src="assets/images/drupal-site-status-2.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal database:connect | database:client</h2>
+					<img class="no-border" src="assets/images/drupal-database-debug-client.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal database:table:debug</h2>
+					<img class="no-border" src="assets/images/drupal-database-table-debug.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal database:table:debug</h2>
+					<h4 class="white">drupal database:table:debug node_field_data</h4>
+					<p>
+						<img class="no-border" src="assets/images/drupal-database-table-debug-node_field_data.png" alt="">
+					</p>
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal config:debug</h2>
+					<img class="no-border" src="assets/images/drupal-config-debug.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal config:debug system.site</h2>
+					<img class="no-border" src="assets/images/drupal-config-debug-system-site.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal config:settings:debug</h2>
+					<img class="no-border" src="assets/images/drupal-config-settings-debug.png" alt="">
+<br/><br/>
+<h4 class="white">sites/default/settings.php</h4>
+<pre><code class="php text-normal">
+$settings['twitter_api_key'] = 'QNDM8YVcRd9LWm0HLUQLQKpdY';
+</code></pre>
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal container:debug</h2>
+					<img class="no-border" src="assets/images/drupal-container-debug.png" alt="">
+				</section>				
+
+				<section data-background="#000000">
+					<h2 class="white">drupal container:debug | peco</h2>
+					<img class="no-border" src="assets/images/drupal-container-debug-peco.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal rest:debug</h2>
+					<img class="no-border" src="assets/images/drupal-rest-debug.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal rest:debug entity:node</h2>
+					<img class="no-border" src="assets/images/drupal-rest-debug-entity-node.png" alt="">
+				</section>
+
+
+				<section data-background="#000000">
+					<h2 class="white">drupal router:debug</h2>
+					<p>
+							<img class="no-border" src="assets/images/drupal-router-debug.png" alt="">
+					</p>
+				</section>
+
+				<section data-background="#000000">
+					<h5 class="white">drupal router:debug | peco | awk '{print $1}' | xargs drupal router:debug</h5>
+					<p>
+							<img class="no-border" src="assets/images/drupal-router-debug-peco.png" alt="">
+					</p>
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal router:debug user.login</h2>
+					<img class="no-border" src="assets/images/drupal-router-debug-user-login.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal state:debug</h2>
+					<img class="no-border" src="assets/images/drupal-state-debug.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal state:debug system.theme.files</h2>
+					<img class="no-border" src="assets/images/drupal-state-debug-system-theme-files.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal site:mode dev [1/2]</h2>
+					<img class="no-border" src="assets/images/drupal-site-mode-dev-1.png" alt="">
+				</section>
+
+				<section>
+					<h2>Performance</h2>
+					<h4>/admin/config/development/performance</h4>
+					<img class="no-border" src="assets/images/config-development-performance.png" alt="">
+				</section>
+
+				<section>
+					<h2 >Views settings</h2>
+					<h4>/admin/structure/views/view/content</h4>
+					<p>
+						<img class="no-border" src="assets/images/views-settings.png" alt="">
+					</p>
+				</section>
+
+				<section>
+					<h2 >Logging and errors</h2>
+					<h4>/admin/config/development/logging</h4>
+					<p>
+						<img class="no-border" src="assets/images/logging-config.png" alt="">
+					</p>
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal database:log:debug --reverse <br/>--limit=20</h2>
+					<img class="no-border" src="assets/images/drupal-database-log-debug.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal database:log:debug 828</h2>
+					<img class="no-border" src="assets/images/drupal-database-log-debug-828.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal site:mode dev [2/2]</h2>
+					<img class="no-border" src="assets/images/drupal-site-mode-dev-2.png" alt="">
+				</section>
+
+				<section>
+					<h2 >Twig debug</h2>
+					<p>
+						<img class="no-border" src="assets/images/twig-debug.png" alt="">
+					</p>
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">kint</h2>
+<pre><code class="shell text-big">
+# Download devel, parent module.
+drupal module:download devel --latest
+
+# Install kint
+drupal module:install kint
+</code></pre>
+				</section>
+
+				<section>
+					<h2>{{ kint() }}</h2>
+					<h4>core/themes/bartik/templates/page.html.twig</h4>
+					<p>
+						<img class="no-border" src="assets/images/devel-kint.png" alt="">
+					</p>
+				</section>
+
+
+ 				<section>
+					<h2>Debug commands not mentioned</h2>
+
+					<div>
+						<div class="half">
+							<ul class="bullets">
+								<li>cron:debug</li>
+								<li>migrate:debug</li>
+								<li>module:debug</li>
+								<li>multisite:debug</li>
+							</ul>
+						</div>
+						<div class="half">
+							<ul class="bullets">
+								<li>theme:debug</li>
+								<li>update:debug</li>
+								<li>user:debug</li>
+								<li>views:debug</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+
+				<section data-background="#000000">
+					<h2 class="white">drupal site:statistics</h2>
+					<img class="no-border" src="assets/images/drupal-site-statistics.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal create:nodes</h2>
+					<img class="no-border" src="assets/images/drupal-create-nodes-interactive.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal create:nodes --no-interaction</h2>
+					<img class="no-border" src="assets/images/drupal-create-nodes.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal chain</h2>
+					<h4 class="white">drupal chain --file=~/.console/chain/create-data.yml</h4>
+<pre><code class="ruby text-normal">
+commands:
+# Create dummy data
+  - command: create:users
+    options:
+        limit: 5
+  - command: create:vocabularies
+    options:
+        limit: 5
+        name-words: 5
+        learning: true
+  - command: create:terms
+  - command: create:nodes
+    options:
+        limit: 50
+</code></pre>
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">webprofiler</h2>
+					<p>
+					<br/>
+<pre><code class="shell text-big">
+# Download devel parent module.
+drupal module:download devel --latest
+
+# Install webprofiler.
+drupal module:install webprofiler
+</code></pre>
+					</p>
+					<p>
+					<br/><br/>
+					<img class="no-border" src="assets/images/webprofiler-toolbar.png" alt="">
+					</p>
+				</section>
+
+				<section>
+					<h2>Webprofiler settings</h2>
+					<h4>/admin/config/development/devel/webprofiler</h4>
+					<p>
+					<img class="no-border" src="assets/images/webprofiler-settings.png" alt="">
+					</p>
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal webprofiler:list --limit=20</h2>
+					<img class="no-border" src="assets/images/drupal-webprofiler-list.png" alt="">
+				</section>
+
+				<section data-background="#000000">
+					<h2 class="white">drupal webprofiler:benchmark</h2>
+					<h4 class="white">drupal webprofiler:benchmark http://drupal8.dev --runs=50</h4>
+					<p>
+						<img class="no-border" src="assets/images/drupal-webprofiler-benchmark.png" alt="">
+					</p>
+				</section>
+
+		<section data-background="#000000">
+				<h2 class="white">site:maintenance</h2>
+				<img class="no-border" src="assets/images/drupal-site-maintenance.png" alt="">
+		</section>
+
+		<section data-background="#000000">
+			<h2 class="white">config</h2>
+<pre><code class="bash text-medium">
+config
+  config:debug                
+  config:edit                 
+  config:export               
+  config:export:content:type  
+  config:export:single        
+  config:export:view          
+  config:import               
+  config:import:single        
+  config:override             
+
+</code></pre>
+		</section>
+
+		<section data-background="#000000">
+			<h2 class="white">user</h2>
+<pre><code class="bash text-big">
+user
+  user:login:clear:attempts
+  user:login:url
+  user:password:hash       
+  user:password:reset
+
+</code></pre>
+		<aside class="notes">
+			<p>
+			<ul>
+				<li>Clear login failed attempts for an account.</li>
+				<li>Returns a one time user login url.</li>
+				<li>Generate a hash from a plaintext password.</li>
+				<li>Reset password for a specific user.</li>
+			</ul>
+			</p>
+		</aside>
+	</section>
+
+				<section>
+					<h2>Questions & Feedback</h2>
+					<hr/>
+					<h3 class="title">Feel free to stalk me or ask any question at:</h3>
+					<br/>
+					<h2 class="dark-blue">@jmolivas</h2>
+				</section>
+
+			</div>
+		</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
+
+	<script type="text/javascript" src="lib/js/jquery.min.js"></script>
+
+	<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'slide', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/leap/leap.js', async: true }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+		<link rel="stylesheet" href="assets/css/custom.css">
+
+	</body>
+</html>
